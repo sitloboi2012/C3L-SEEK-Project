@@ -1,0 +1,14 @@
+numpy==1.18
+scipy==1.1.0
+pandas==1.1.5
+scikit-learn==0.23.1
+skills-ml==2.0.0
+skills-utils==0.4.0
+boto==2.49.0
+matplotlib==3.2.2
+plotly==4.4.1
+nltk==3.2.5
+rake-nltk==1.0.4
+wordwise==0.0.3
+re==2.2.1
+json==2.0.9
