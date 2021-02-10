@@ -8,7 +8,16 @@ from skills_ultis.job_posting_import import JobPostingImportBase
 from skills_utils.time import overlaps, quarter_to_daterange
 
 
+def flatten(list_post):
+    if type(list_post) is list:
+        return(",".join(list_post))
+    else:
+        return list_post
+
 class AUSJobPosting(JobPostingImportBase):
+    """
+    Transformed Job Posting from original to the correct format (schema)
+    """
     date_format = '%Y-%b-%d'
     
 
@@ -16,8 +25,29 @@ class AUSJobPosting(JobPostingImportBase):
         super(AUSJobPosting, self)
         pass
 
+    
+    def id(self, document: dict or list):
+        """
+        Given a raw job posting and return its id unique id
 
-    def transform(self):
+        Args:
+            document (dict or list): An instance contains job posting information
+
+        """
+        return document["uniq_id"]
+
+
+    def transform(self, document: list or dict):
+        """
+        Transform a raw job posting into a specific schema
+
+        Args:
+            document (list or dict): contains information about job posting
+        
+        Returns:
+            Return a transformed document that has been converted into a schema
+        """
+
         transformed = {
             "@context": "http://schema.org",
             "@type": "JobPosting"
@@ -34,7 +64,7 @@ class AUSJobPosting(JobPostingImportBase):
 
 
         for target_key, source_key in mapping:
-            transformed[target_key] = document.get(source_key)
+            transformed[target_key] = flatten(document.get(source_key))
 
 
         if len(document["post_date"])  == 0 or len(document["postdate_yyyymmdd"]) == 0:
