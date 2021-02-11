@@ -4,7 +4,7 @@ import tempfile
 
 
 from skills_utils.io import stream_json_file
-from skills_ultis.job_posting_import import JobPostingImportBase
+from skills_utils.job_posting_import import JobPostingImportBase
 from skills_utils.time import overlaps, quarter_to_daterange
 
 
@@ -57,13 +57,13 @@ class AUSJobPosting(JobPostingImportBase):
         mapping = {
             "id": "uniq_id",
             "title": "job_title",
-            "description": "job_description",
+            "text": "job_description",
             "employment_type": "job_type",
             "occupation_category": "category",
         }
 
 
-        for target_key, source_key in mapping:
+        for target_key, source_key in mapping.items():
             transformed[target_key] = flatten(document.get(source_key))
 
 
