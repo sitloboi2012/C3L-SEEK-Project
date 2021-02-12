@@ -1,5 +1,6 @@
 tasks:
   - init: pip3 install -r requirements.txt
+  #- command: python setup.py build_ext --inplace -j 4
 
 vscode:
   extensions:

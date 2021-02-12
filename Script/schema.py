@@ -7,7 +7,7 @@ from typing import Dict, Text, Any, Generator
 from io import BytesIO
 from itertools import chain, islice
 from jobPosting_Transformer import AUSJobPosting
-from skills_ml.job_postings.raw.virginia import ViriginiaTransformer
+#from skills_ml.job_postings.raw.virginia import ViriginiaTransformer
 
 JobPostingType = Dict[Text, Any]
 JobPostingGeneratorType = Generator[JobPostingType, None, None]
