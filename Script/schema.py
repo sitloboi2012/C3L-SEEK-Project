@@ -7,15 +7,16 @@ from typing import Dict, Text, Any, Generator
 from io import BytesIO
 from itertools import chain, islice
 from jobPosting_Transformer import AUSJobPosting
-
+from skills_ml.job_postings.raw.virginia import ViriginiaTransformer
 
 JobPostingType = Dict[Text, Any]
 JobPostingGeneratorType = Generator[JobPostingType, None, None]
 MetadataType = Dict[Text, Dict[Text,Any]]
 
-class JobPostingCollect(object):
 
-    def __init__(self, num_records: int= 100, filePath: str="/content/data.ldjson"):
+class JobPostingCollection(object):
+
+    def __init__(self, num_records: int= 100, filePath: str="/Dataset/data.ldjson"):
         self.filePath = filePath
         if num_records > 200:
             logging.warning("'Cannot provide %s records as a maximum of 200 are available', num_records")
@@ -38,5 +39,8 @@ class JobPostingCollect(object):
             'purpose': 'testing'
         }}
 
+
 def retry_if_io_error(exception):
     return isinstance(exception, IOError)
+
+    

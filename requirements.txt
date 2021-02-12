@@ -9,6 +9,7 @@ matplotlib==3.2.2
 plotly==4.4.1
 nltk==3.2.5
 rake-nltk==1.0.4
+cython==0.29.21
 wordwise==0.0.3
 #regex==2.2.1
 #json==2.0.9 

@@ -18,15 +18,15 @@ class AUSJobPosting(JobPostingImportBase):
     """
     Transformed Job Posting from original to the correct format (schema)
     """
-    date_format = '%Y-%b-%d'
+    date_format = '%Y-%m-%d'
     
 
-    def __init__(self):
-        super(AUSJobPosting, self)
-        pass
+    def __init__(self, **kwargs):
+        self.date_format = "%Y-%m-%d"
+        super(AUSJobPosting, self).__init__(**kwargs)
 
-    
-    def id(self, document: dict or list):
+
+    def id(self, document):
         """
         Given a raw job posting and return its id unique id
 
@@ -37,7 +37,7 @@ class AUSJobPosting(JobPostingImportBase):
         return document["uniq_id"]
 
 
-    def transform(self, document: list or dict):
+    def transform(self, document):
         """
         Transform a raw job posting into a specific schema
 
@@ -67,29 +67,27 @@ class AUSJobPosting(JobPostingImportBase):
             transformed[target_key] = flatten(document.get(source_key))
 
 
-        if len(document["post_date"])  == 0 or len(document["postdate_yyyymmdd"]) == 0:
+        if len(document["post_date"])  == 0:
             transformed["post_date"] = None
         else:
             start = datetime.strptime(document["post_date"], self.date_format)
-        
+            transformed["post_date"] = start.date().isoformat()
 
-        location = document.get("state",[])
-        if len(location) > 0:
-            transformed["state"] = {
-                "@type": "Place",
-                "location": {
-                    "@type": "PostalAddress",
-                    "addressRegion": location[0].get("state","")
-                }
+
+        transformed["state"] = {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": document["state"]
             }
+        }
 
 
         transformed["company"] = {
             "@type": "Organization",
             "name": document.get("company_name")
         }
-        
-
+               
         try:
             transformed["salary"] = {
                 "@type": "MonetaryAmount",
