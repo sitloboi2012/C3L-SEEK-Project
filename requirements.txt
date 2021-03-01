@@ -5,7 +5,6 @@ sacremoses
 numpy
 pandas 
 logging
-json
 os
 gzip
 re
