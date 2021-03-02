@@ -5,6 +5,7 @@ from typing import Dict, Text, Any, Generator
 from typing import List, Set, Generator, Dict, Pattern, Tuple
 from seek_au import SeekAusTransformer
 import json
+import os
 
 JobPostingType = Dict[Text, Any]
 JobPostingGeneratorType = Generator[JobPostingType, None, None]
@@ -33,7 +34,8 @@ class JobPostingCollectionSampleFile(object):
             num_records = 50
         #full_filename = os.path.join(os.path.dirname(__file__), '/seek_au-jobs_listing__20190901_20191231_sample.ldjson')
         #f = gzip.GzipFile(filename=full_filename)
-        full_filename = '/workspace/C3L-SEEK-Project/Script/data_2.ldjson'
+        filename = input("Your file name: ")
+        full_filename = os.path.join(os.getcwd() + "/Dataset", filename)
         print(full_filename)
         f = open(full_filename)
         self.lines = f.read().split('\n')
